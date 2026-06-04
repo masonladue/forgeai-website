@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForgeAI — Build AI Into Your Business</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6B2B;
+      --orange-dark: #e55a1c;
+      --bg: #0D0D0F;
+      --bg2: #131316;
+      --bg3: #1A1A1F;
+      --border: rgba(255,255,255,0.07);
+      --text: #F0F0F0;
+      --muted: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--orange); }
+
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 10px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--orange-dark); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(255,107,43,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,107,43,0.12);
+      border: 1px solid rgba(255,107,43,0.3);
+      color: var(--orange);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span { color: var(--orange); }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 44px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 36px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 16px 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.25); }
+
+    /* SECTION BASE */
+    section { padding: 100px 24px; }
+
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* WHAT WE DO */
+    .what { background: var(--bg2); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: rgba(255,107,43,0.3); }
+
+    .card-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,107,43,0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .card p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+
+    /* WHO ITS FOR */
+    .for-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 56px;
+    }
+
+    .for-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .for-check {
+      color: var(--orange);
+      font-size: 1.1rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .for-item p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+    .for-item strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 1rem; }
+
+    /* HOW IT WORKS */
+    .how { background: var(--bg2); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0;
+      margin-top: 56px;
+      position: relative;
+    }
+
+    .step {
+      padding: 36px 32px;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--orange);
+      font-size: 1.4rem;
+      display: none;
+    }
+
+    @media (min-width: 800px) {
+      .step:not(:last-child)::after { display: block; }
+    }
+
+    .step-num {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgba(255,107,43,0.2);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .testimonial {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+    }
+
+    .stars { color: var(--orange); font-size: 1rem; margin-bottom: 18px; letter-spacing: 2px; }
+
+    .testimonial blockquote {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #ccc;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testimonial-author strong { display: block; font-size: 0.95rem; }
+    .testimonial-author span { color: var(--muted); font-size: 0.85rem; }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, rgba(255,107,43,0.08) 0%, transparent 60%);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cta .section-title { max-width: 700px; margin: 0 auto 16px; }
+    .cta .section-sub { margin: 0 auto 44px; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer span { color: var(--orange); }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 16px 24px; }
+      .hero h1 { letter-spacing: -0.5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Forge<span>AI</span></div>
+    <a href="#book" class="nav-cta">Book a Call</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">AI Consulting for Business Owners</div>
+    <h1>Stop Doing Work a<br /><span>Machine Should Do</span></h1>
+    <p>ForgeAI helps business owners identify their biggest time drains and build custom AI workflows that handle the repetitive work — so you can focus on growing.</p>
+    <div class="hero-btns">
+      <a href="#book" class="btn-primary">Book a Free Discovery Call</a>
+      <a href="#how" class="btn-secondary">See How It Works</a>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section class="what">
+    <div class="container">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">AI that actually works<br />for your business</h2>
+      <p class="section-sub">We don't sell software. We sit down with you, learn how your business runs, and build AI systems tailored to your exact workflow.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>Workflow Audit</h3>
+          <p>We map out where your team is spending the most time on repetitive, manual tasks — and find the highest-leverage places to plug in AI.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Custom AI Build</h3>
+          <p>We build a workflow tailored to your business — not a generic template. Every system is designed around how you actually operate.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3>Hand-Off & Support</h3>
+          <p>You walk away with a working system and the knowledge to use it. No ongoing dependency on us — unless you want it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO ITS FOR -->
+  <section>
+    <div class="container">
+      <div class="section-label">Who It's For</div>
+      <h2 class="section-title">Built for business owners<br />who are ready to scale</h2>
+      <p class="section-sub">If you're spending hours on tasks that feel like they should be automatic — you're in the right place.</p>
+      <div class="for-list">
+        <div class="for-item">
+          <div class="for-check">✦</div>
+          <div>
+            <strong>You're drowning in repetitive tasks</strong>
+            <p>Emails, reports, data entry, scheduling — work that eats your day but doesn't grow your business.</p>
+          </div>
+        </div>
+        <div class="for-item">
+          <div class="for-check">✦</div>
+          <div>
+            <strong>You've heard about AI but don't know where to start</strong>
+            <p>You know it's important. You just don't have time to figure it out. That's exactly what we're here for.</p>
+          </div>
+        </div>
+        <div class="for-item">
+          <div class="for-check">✦</div>
+          <div>
+            <strong>You want results, not a tech lesson</strong>
+            <p>We handle the technical side. You just tell us what's slowing you down and we build the fix.</p>
+          </div>
+        </div>
+        <div class="for-item">
+          <div class="for-check">✦</div>
+          <div>
+            <strong>You're ready to run a leaner operation</strong>
+            <p>Whether you have 2 employees or 200, AI can cut the grunt work and let your team focus on what matters.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Simple process.<br />Real results.</h2>
+      <p class="section-sub">From first call to working AI system — here's exactly what to expect.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Book a Discovery Call</h3>
+          <p>We spend 30 minutes learning about your business, your biggest bottlenecks, and where AI can make the biggest impact.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>We Build Your Workflow</h3>
+          <p>We design and build a custom AI system tailored to your operation. No generic tools — built specifically for how you work.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>You Save Hours Every Week</h3>
+          <p>Walk away with a working system, a walkthrough of how to use it, and hours back in your week from day one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Real Results</div>
+      <h2 class="section-title">What business owners<br />are saying</h2>
+      <p class="section-sub">We've worked with businesses across industries to cut manual work and build smarter operations.</p>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <blockquote>"ForgeAI completely changed how our team handles client follow-ups. What used to take hours is now fully automated. Mason understood our business quickly and built something that actually works."</blockquote>
+          <div class="testimonial-author">
+            <strong>Bob LaDue</strong>
+            <span>Owner, Coastal Mortgage and Realty</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="book">
+    <div class="container">
+      <div class="section-label">Get Started</div>
+      <h2 class="section-title">Ready to get hours back<br />in your week?</h2>
+      <p class="section-sub">Book a free 30-minute discovery call. No commitment, no tech jargon — just an honest conversation about where AI can help your business.</p>
+      <a href="https://calendly.com/mason-forgeai" class="btn-primary" target="_blank">Book Your Free Call →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>ForgeAI</span> · mason.forgeai@gmail.com</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
